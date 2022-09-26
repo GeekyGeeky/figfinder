@@ -1,0 +1,37 @@
+<div>
+  <h3>Search for layer or component</h3>
+  <input id="search" type="text" class="search" />
+  <!-- <p id="">Enter a search query</p> -->
+</div>
+
+
+<script>
+
+  document.getElementById('search').onkeyup = (event) => {
+    // console.log(event.target.value)
+    // const textbox = document.getElementById('count');
+    // const count = parseInt(textbox.value, 10);
+    const searchQuery = event.target.value;
+    if (searchQuery && searchQuery.length > 1) {
+      parent.postMessage({ pluginMessage: { type: 'process-search', searchQuery } }, '*')
+    } else {
+
+    }
+  }
+
+  document.getElementById('cancel').onclick = () => {
+    parent.postMessage({ pluginMessage: { type: 'cancel' } }, '*')
+  }
+
+</script>
+<style>
+  * {
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  .search {
+    width: 100%;
+    border-radius: 6px;
+    padding: 12px;
+  }
+</style>
