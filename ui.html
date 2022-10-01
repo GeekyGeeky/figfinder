@@ -1,27 +1,118 @@
 <div>
-  <h3>Search for layer or component</h3>
-  <input id="search" type="text" class="search" />
-  <!-- <p id="">Enter a search query</p> -->
-</div>
+  <div id="search-page" class="g" style="padding: 24px;">
+    <div style="margin-bottom: 24px;">
+      <label for="search">Keyword</label>
+      <div class="input-icons">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="icon-1">
+          <path
+            d="M7.66659 14.0002C11.1644 14.0002 13.9999 11.1646 13.9999 7.66683C13.9999 4.16903 11.1644 1.3335 7.66659 1.3335C4.16878 1.3335 1.33325 4.16903 1.33325 7.66683C1.33325 11.1646 4.16878 14.0002 7.66659 14.0002Z"
+            stroke="#999999" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M14.6666 14.6668L13.3333 13.3335" stroke="#999999" stroke-width="1.5" stroke-linecap="round"
+            stroke-linejoin="round" />
+        </svg>
+        <input id="search" type="text" class="text-field" placeholder="Search" />
+      </div>
+    </div>
 
+    <div style="margin-bottom: 16px;">
+      <label for="layer-type">Layer type</label>
+      <select class="select-field" id="layer-type">
+        <option value="all">All types</option>
+        <option value="text">Text</option>
+        <option value="cext">Components</option>
+      </select>
+    </div>
+
+    <div class="info-box">
+      <svg width="36" height="36" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M7.99992 14.6668C11.6666 14.6668 14.6666 11.6668 14.6666 8.00016C14.6666 4.3335 11.6666 1.3335 7.99992 1.3335C4.33325 1.3335 1.33325 4.3335 1.33325 8.00016C1.33325 11.6668 4.33325 14.6668 7.99992 14.6668Z"
+          stroke="#474747" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M8 5.3335V8.66683" stroke="#474747" stroke-width="1.5" stroke-linecap="round"
+          stroke-linejoin="round" />
+        <path d="M7.99634 10.6665H8.00233" stroke="#292D32" stroke-width="2" stroke-linecap="round"
+          stroke-linejoin="round" />
+      </svg>
+
+      <p>Input your keyword phrase into the input “Keyword” and select your layer type. Click on the search button to
+        run plugin.👌</p>
+    </div>
+
+    <button type="button" class="search-btn" id="search-btn">Search</button>
+
+  </div>
+  <div id="result-page" class="hide" style="padding: 0px 24px">
+    <div class="back-button" id="back-button">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M6.38016 3.95312L2.3335 7.99979L6.38016 12.0465" stroke="#7D7D7D" stroke-width="1.5"
+          stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M13.6668 8H2.44678" stroke="#7D7D7D" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"
+          stroke-linejoin="round" />
+      </svg>
+      <p>Back to search</p>
+    </div>
+    <div id="empty-result" style="padding: 48px 24px; text-align:center;">
+      <svg width="110" height="102" viewBox="0 0 110 102" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="49.6812" cy="49.6812" r="49.6812" fill="#F1F1F1" />
+        <circle cx="49.275" cy="49.7657" r="28.7081" fill="#F1F1F1" stroke="#C4C4C4" stroke-width="2" />
+        <circle cx="49.2748" cy="49.766" r="20.2201" fill="#FFFEFF" stroke="#C4C4C4" stroke-width="2" />
+        <path
+          d="M49.2749 34.1653C49.2749 33.8537 49.0221 33.6 48.7106 33.6109C44.8118 33.747 41.0862 35.2895 38.2287 37.964C35.3712 40.6385 33.5858 44.254 33.1923 48.1353C33.1609 48.4453 33.3973 48.7143 33.7082 48.7349C34.0191 48.7555 34.2868 48.5199 34.319 48.21C34.693 44.6145 36.3514 41.2667 38.9998 38.7879C41.6482 36.3091 45.0983 34.8756 48.7107 34.7401C49.0221 34.7284 49.2749 34.4769 49.2749 34.1653Z"
+          fill="#C4C4C4" />
+        <rect x="71.4574" y="81.2695" width="10.3062" height="29.6873" rx="5.15309"
+          transform="rotate(-45 71.4574 81.2695)" fill="#F1F1F1" stroke="#C4C4C4" stroke-width="2" />
+        <rect x="82.1211" y="83.6025" width="1.34862" height="11.3078" rx="0.674309"
+          transform="rotate(-45 82.1211 83.6025)" fill="white" />
+        <rect x="70.9087" y="74.4121" width="1.38436" height="5.53746" transform="rotate(-45 70.9087 74.4121)"
+          fill="#C4C4C4" />
+        <rect x="85.5972" y="46.2798" width="13.8436" height="1.38436" rx="0.692182" fill="#C4C4C4" />
+        <rect y="57.7319" width="13.8436" height="1.38436" rx="0.692182" fill="#C4C4C4" />
+        <rect x="102.209" y="46.2798" width="6.92182" height="1.38436" rx="0.692182" fill="#C4C4C4" />
+        <rect x="89.0581" y="51.3589" width="6.92182" height="1.38436" rx="0.692182" fill="#C4C4C4" />
+        <rect x="3.46094" y="62.811" width="6.92182" height="1.38436" rx="0.692182" fill="#C4C4C4" />
+      </svg>
+      <p style="color: #7D7D7D; margin:16px;">
+        We couldn't find any result that
+        match the keywrod “search”
+      </p>
+    </div>
+  </div>
+</div>
 
 <script>
 
-  document.getElementById('search').onkeyup = (event) => {
-    // console.log(event.target.value)
-    // const textbox = document.getElementById('count');
+  onmessage = (event) => {
+    console.log("got this from the plugin code", event.data.pluginMessage)
+  }
+
+  // document.getElementById('search').onkeyup = (event) => {
+  document.getElementById('search-btn').onclick = (event) => {
+
+    // const  
+
+    const inputFieldText = document.getElementById('search').value;
+    const selectFieldText = document.getElementById('layer-type').value;
+    console.log(inputFieldText, selectFieldText)
+
     // const count = parseInt(textbox.value, 10);
-    const searchQuery = event.target.value;
-    if (searchQuery && searchQuery.length > 1) {
-      parent.postMessage({ pluginMessage: { type: 'process-search', searchQuery } }, '*')
-    } else {
+    const query = { searchQuery: inputFieldText, layerType: selectFieldText };
+    // if (searchQuery && searchQuery.length > 1) {
+    parent.postMessage({ pluginMessage: { type: 'process-search', query } }, '*')
 
-    }
+    document.getElementById('search-page').classList.add('hide');
+    document.getElementById('result-page').classList.remove('hide');
+    // } else {
+
+    // }
   }
 
-  document.getElementById('cancel').onclick = () => {
-    parent.postMessage({ pluginMessage: { type: 'cancel' } }, '*')
+  document.getElementById('back-button').onclick = () => {
+    document.getElementById('search-page').classList.remove('hide');
+    document.getElementById('result-page').classList.add('hide');
+    // parent.postMessage({ pluginMessage: { type: 'cancel' } }, '*')
   }
+
+
 
 </script>
 <style>
@@ -29,9 +120,81 @@
     font-family: Arial, Helvetica, sans-serif;
   }
 
-  .search {
+  .hide {
+    display: none;
+  }
+
+  .text-field {
     width: 100%;
     border-radius: 6px;
-    padding: 12px;
+    padding: 16px 12px 16px 32px;
+    border: 0.5 solid grey;
+  }
+
+  .select-field {
+    width: 100%;
+    border-radius: 6px;
+    padding: 16px;
+    margin: 10px 0px;
+    border: 0.5 solid grey;
+  }
+
+  .input-icons {
+    width: 100%;
+    margin: 10px 0px;
+  }
+
+  .input-icons svg {
+    position: absolute;
+  }
+
+  .input-icons svg {
+    position: absolute;
+  }
+
+  .icon-1 {
+    padding: 16px 0px 0px 12px;
+    /* min-width: 40px; */
+  }
+
+  .info-box {
+    margin-top: 24px;
+    margin-bottom: 28px;
+    padding: 8px 16px 8px 16px;
+    background-color: #F5F5F5;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border-radius: 4px;
+  }
+
+  .back-button {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    cursor: pointer;
+    width: fit-content;
+  }
+
+  .back-button p {
+    color: #7D7D7D;
+    margin-left: 12px;
+  }
+
+  /* .info-box  */
+  .info-box p {
+    font-size: 13px;
+    margin-left: 16px;
+    color: #555555;
+  }
+
+  .search-btn {
+    height: 52px;
+    background-color: #1C77C3;
+    width: 100%;
+    border-radius: 4px;
+    font-size: 16px;
+    border: none;
+    color: white;
   }
 </style>
