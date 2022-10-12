@@ -17,18 +17,43 @@ figma.ui.onmessage = msg => {
   // figma.ui.postMessage('msg')
   if (msg.type === 'process-search') {
 
-    console.log(msg)
+    const { searchQuery, layerType } = msg.query;
+    // query: {searchQuery: '', layerType: 'all'}
+    if (layerType == 'all') {
+      console.log(searchQuery)
+
+      const node = figma.currentPage.findAll(node =>
+        node.name.toLowerCase().includes(searchQuery.toLowerCase()));
+      console.log(node.map(n => n.name))
+      const result = node.map(n => n.name);
+      figma.ui.postMessage({ count: result.length, type: 'all', result })
+    } else if (layerType == 'text') {
+      console.log(searchQuery)
+      const node = figma.currentPage.findAll(node => node.type === "TEXT"
+        &&
+        node.characters.toLowerCase().includes(searchQuery.toLowerCase())) as TextNode[];
+      console.log(node.map(n => n.characters))
+      const result = node.map(n => n.characters);
+      figma.ui.postMessage({ count: result.length, type: 'text', result })
+    } else if (layerType == 'frame') {
+      console.log(searchQuery)
+      const node = figma.currentPage.findAll(node => node.type === "FRAME"
+        &&
+        node.name.toLowerCase().includes(searchQuery.toLowerCase())) as TextNode[];
+      console.log(node.map(n => n.name))
+      const result = node.map(n => n.name);
+      figma.ui.postMessage({ count: result.length, type: 'frame', result })
+    } else {
+      figma.ui.postMessage({ count: 0, type: layerType, result: [] })
+    }
 
     // const node = figma.currentPage.findAll()
     // console.log(node)
-    const node = figma.currentPage.findAll(node => node.type === "TEXT") as TextNode[];
     // const node = figma.currentPage.findAll(node => node.type === "TEXT" && node.characters.length > 100)
     // const nodesFound = figma.currentPage.findChildren((node) => node.name.toLowerCase().includes(msg.searchQuery.toLowerCase()));
     // figma.currentPage.selection = nodesFound;
     // figma.viewport.scrollAndZoomIntoView(nodesFound);
-    console.log(node.map(n => n.characters))
-    const result = node.map(n => n.characters);
-    figma.ui.postMessage({ count: result.length, type: 'text', result })
+
 
 
     // const nodes: SceneNode[] = [];
@@ -39,6 +64,23 @@ figma.ui.onmessage = msg => {
     //   figma.currentPage.appendChild(rect);
     //   nodes.push(rect);
     // }
+  } else if (msg.type === 'search-item') {
+    const { searchQuery, layerType } = msg.query;
+    // let nodesFound = figma.currentPage.findChildren((node) => node.name.toLowerCase().includes(msg.searchQuery.toLowerCase()));
+    let nodesFound ;
+    // const node = figma.currentPage.findAll(node => node.type === "TEXT" && node.characters.length > 100)
+    if (layerType == 'text') {
+      nodesFound = figma.currentPage.findChildren((node) => node.type === 'TEXT' && node.characters.toLowerCase().includes(searchQuery.toLowerCase()));
+    }
+    if (layerType == 'frame') {
+      nodesFound = figma.currentPage.findChildren((node) => node.type === 'FRAME' && node.name.toLowerCase().includes(searchQuery.toLowerCase()));
+    }
+
+    if (nodesFound) {
+    figma.currentPage.selection = nodesFound;
+    figma.viewport.scrollAndZoomIntoView(nodesFound);
+    }
+
   } else {
     figma.closePlugin('Command not available');
   }

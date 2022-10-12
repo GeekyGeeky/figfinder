@@ -17,9 +17,9 @@
     <div style="margin-bottom: 16px;">
       <label for="layer-type">Layer type</label>
       <select class="select-field" id="layer-type">
-        <option value="all">All types</option>
+        <!-- <option value="all">All types</option> -->
         <option value="text">Text</option>
-        <option value="cext">Components</option>
+        <option value="frame">Frame</option>
       </select>
     </div>
 
@@ -51,7 +51,7 @@
       </svg>
       <p>Back to search</p>
     </div>
-    <div id="empty-result" style="padding: 48px 24px; text-align:center;">
+    <div id="empty-result" style="padding: 48px 24px; text-align:center;" class="hide">
       <svg width="110" height="102" viewBox="0 0 110 102" fill="none" xmlns="http://www.w3.org/2000/svg">
         <circle cx="49.6812" cy="49.6812" r="49.6812" fill="#F1F1F1" />
         <circle cx="49.275" cy="49.7657" r="28.7081" fill="#F1F1F1" stroke="#C4C4C4" stroke-width="2" />
@@ -76,19 +76,70 @@
         match the keywrod “search”
       </p>
     </div>
+    <div id="result" class="hide">
+
+    </div>
   </div>
 </div>
 
 <script>
 
+  var layer_type = '';
+
   onmessage = (event) => {
+    const pluginMessageResult = event.data.pluginMessage;
+    // console.log()
+    if (pluginMessageResult.count && pluginMessageResult.count > 0) {
+      console.log('result', pluginMessageResult.result)
+      const resultDiv = document.getElementById('result');
+      resultDiv.classList.remove('hide');
+      layer_type = pluginMessageResult.type;
+      resultDiv.innerHTML = `<p>Search results: ${pluginMessageResult.count} item(s)</p>`
+      for (let index = 0; index < pluginMessageResult.count; index++) {
+        const element = pluginMessageResult.result[index];
+        const parentDivNode = document.createElement("div");
+
+
+        const node = document.createElement("p");
+        const textnode = document.createTextNode(element);
+        node.appendChild(textnode);
+        //         node.appendChild(`
+        // `)
+
+        node.onclick = handleClick;
+        // node.classList.add('item-click')
+
+        parentDivNode.appendChild(node)
+
+        resultDiv.appendChild(parentDivNode)
+
+        node.insertAdjacentHTML("beforebegin", textSvg);
+
+      }
+    } else {
+      document.getElementById('empty-result').classList.remove('hide');
+    }
     console.log("got this from the plugin code", event.data.pluginMessage)
+  }
+
+  const textSvg = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M1.78003 4.77986V3.56652C1.78003 2.79986 2.40003 2.18652 3.16003 2.18652H12.84C13.6067 2.18652 14.22 2.80652 14.22 3.56652V4.77986" stroke="#292D32" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M8 13.8136V2.74023" stroke="#292D32" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M5.37329 13.8135H10.6266" stroke="#292D32" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+`;
+
+
+  function handleClick() {
+    const query = { searchQuery: this.textContent, layerType: layer_type };
+    parent.postMessage({ pluginMessage: { type: 'search-item', query } }, '*')
+
+    console.log('hello hiiiiii', layer_type, this.textContent)
+    // alert(this.textContent);
   }
 
   // document.getElementById('search').onkeyup = (event) => {
   document.getElementById('search-btn').onclick = (event) => {
-
-    // const  
 
     const inputFieldText = document.getElementById('search').value;
     const selectFieldText = document.getElementById('layer-type').value;
@@ -101,14 +152,13 @@
 
     document.getElementById('search-page').classList.add('hide');
     document.getElementById('result-page').classList.remove('hide');
-    // } else {
-
-    // }
   }
 
   document.getElementById('back-button').onclick = () => {
     document.getElementById('search-page').classList.remove('hide');
+    document.getElementById('result').innerHTML = '';
     document.getElementById('result-page').classList.add('hide');
+    document.getElementById('empty-result').classList.add('hide');
     // parent.postMessage({ pluginMessage: { type: 'cancel' } }, '*')
   }
 
@@ -119,6 +169,24 @@
   * {
     font-family: Arial, Helvetica, sans-serif;
   }
+
+  #result div {
+    display: flex;
+    align-items: center;
+    /* align-items: flex-start; */
+    cursor: pointer;
+    margin-bottom: 8px;
+    background: #FAFAFA;
+    border-radius: 4px;
+    padding: 8px 16px;
+    height: 20px;
+  }
+
+  #result div p {
+    margin: 2px 12px;
+  }
+
+
 
   .hide {
     display: none;
