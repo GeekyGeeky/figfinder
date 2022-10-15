@@ -43,13 +43,13 @@
   </div>
   <div id="result-page" class="hide" style="padding: 0px 24px">
     <div class="back-button" id="back-button">
-      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <svg width="20" height="20" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M6.38016 3.95312L2.3335 7.99979L6.38016 12.0465" stroke="#7D7D7D" stroke-width="1.5"
           stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
         <path d="M13.6668 8H2.44678" stroke="#7D7D7D" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"
           stroke-linejoin="round" />
       </svg>
-      <p>Back to search</p>
+      <p style="margin: 0;">Back to search</p>
     </div>
     <div id="empty-result" style="padding: 48px 24px; text-align:center;" class="hide">
       <svg width="110" height="102" viewBox="0 0 110 102" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -76,6 +76,7 @@
         match the keywrod “search”
       </p>
     </div>
+    <!-- <hr/> -->
     <div id="result" class="hide">
 
     </div>
@@ -106,14 +107,15 @@
         //         node.appendChild(`
         // `)
 
-        node.onclick = handleClick;
+        parentDivNode.setAttribute('content',element )
+        parentDivNode.onclick = handleClick;
         // node.classList.add('item-click')
 
         parentDivNode.appendChild(node)
 
         resultDiv.appendChild(parentDivNode)
 
-        node.insertAdjacentHTML("beforebegin", textSvg);
+        node.insertAdjacentHTML("beforebegin", getIcon());
 
       }
     } else {
@@ -129,12 +131,28 @@
 </svg>
 `;
 
+  const frameSvg = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<line x1="4.5" y1="1.3335" x2="4.5" y2="14.6668" stroke="black"/>
+<line x1="14.6667" y1="5.1665" x2="1.33341" y2="5.1665" stroke="black"/>
+<line x1="14.6667" y1="11.1665" x2="1.33341" y2="11.1665" stroke="black"/>
+<line x1="11.8333" y1="1.3335" x2="11.8333" y2="14.6668" stroke="black"/>
+</svg>
+`;
+
+  function getIcon() {
+    if (layer_type == 'text') {
+      return textSvg;
+    }
+    return frameSvg;
+  }
+
+
 
   function handleClick() {
-    const query = { searchQuery: this.textContent, layerType: layer_type };
+    const query = { searchQuery: this.getAttribute('content'), layerType: layer_type };
     parent.postMessage({ pluginMessage: { type: 'search-item', query } }, '*')
 
-    console.log('hello hiiiiii', layer_type, this.textContent)
+    console.log('hello hiiiiii', layer_type, this.getAttribute('content'))
     // alert(this.textContent);
   }
 
@@ -175,10 +193,10 @@
     align-items: center;
     /* align-items: flex-start; */
     cursor: pointer;
-    margin-bottom: 8px;
+    margin-bottom: 12px;
     background: #FAFAFA;
     border-radius: 4px;
-    padding: 8px 16px;
+    padding: 12px 16px;
     height: 20px;
   }
 
@@ -242,6 +260,8 @@
     align-items: center;
     cursor: pointer;
     width: fit-content;
+    column-gap: 12px;
+    margin: 20px 0 0 0;
   }
 
   .back-button p {
