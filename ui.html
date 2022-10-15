@@ -107,7 +107,7 @@
         //         node.appendChild(`
         // `)
 
-        parentDivNode.setAttribute('content',element )
+        parentDivNode.setAttribute('content', element)
         parentDivNode.onclick = handleClick;
         // node.classList.add('item-click')
 
@@ -151,6 +151,15 @@
   function handleClick() {
     const query = { searchQuery: this.getAttribute('content'), layerType: layer_type };
     parent.postMessage({ pluginMessage: { type: 'search-item', query } }, '*')
+
+    const resultDiv = document.getElementById('result');
+    // resultDiv.getElementsByTagName('div');
+    const divElement = resultDiv.querySelector('div.active');
+    if (divElement) {
+      divElement.classList.remove('active');
+    }
+    this.classList.add('active')
+    console.info(resultDiv.getElementsByTagName('div'));
 
     console.log('hello hiiiiii', layer_type, this.getAttribute('content'))
     // alert(this.textContent);
@@ -198,6 +207,10 @@
     border-radius: 4px;
     padding: 12px 16px;
     height: 20px;
+  }
+
+  #result div.active {
+    background-color: #D6D8DB;
   }
 
   #result div p {
