@@ -1,5 +1,5 @@
 <div>
-  <div id="search-page" class="g" style="padding: 24px;">
+  <div id="search-page" style="padding: 24px;">
     <div style="margin-bottom: 24px;">
       <label for="search">Keyword</label>
       <div class="input-icons">
@@ -17,7 +17,6 @@
     <div style="margin-bottom: 16px;">
       <label for="layer-type">Layer type</label>
       <select class="select-field" id="layer-type">
-        <!-- <option value="all">All types</option> -->
         <option value="text">Text</option>
         <option value="frame">Frame</option>
       </select>
@@ -73,10 +72,9 @@
       </svg>
       <p style="color: #7D7D7D; margin:16px;">
         We couldn't find any result that
-        match the keywrod “search”
+        match the keyword “search”
       </p>
     </div>
-    <!-- <hr/> -->
     <div id="result" class="hide">
 
     </div>
@@ -89,7 +87,6 @@
 
   onmessage = (event) => {
     const pluginMessageResult = event.data.pluginMessage;
-    // console.log()
     if (pluginMessageResult.count && pluginMessageResult.count > 0) {
       console.log('result', pluginMessageResult.result)
       const resultDiv = document.getElementById('result');
@@ -97,19 +94,15 @@
       layer_type = pluginMessageResult.type;
       resultDiv.innerHTML = `<p>Search results: ${pluginMessageResult.count} item(s)</p>`
       for (let index = 0; index < pluginMessageResult.count; index++) {
+
         const element = pluginMessageResult.result[index];
         const parentDivNode = document.createElement("div");
-
-
         const node = document.createElement("p");
         const textnode = document.createTextNode(element);
         node.appendChild(textnode);
-        //         node.appendChild(`
-        // `)
 
         parentDivNode.setAttribute('content', element)
         parentDivNode.onclick = handleClick;
-        // node.classList.add('item-click')
 
         parentDivNode.appendChild(node)
 
@@ -146,14 +139,11 @@
     return frameSvg;
   }
 
-
-
   function handleClick() {
     const query = { searchQuery: this.getAttribute('content'), layerType: layer_type };
     parent.postMessage({ pluginMessage: { type: 'search-item', query } }, '*')
 
     const resultDiv = document.getElementById('result');
-    // resultDiv.getElementsByTagName('div');
     const divElement = resultDiv.querySelector('div.active');
     if (divElement) {
       divElement.classList.remove('active');
@@ -162,19 +152,15 @@
     console.info(resultDiv.getElementsByTagName('div'));
 
     console.log('hello hiiiiii', layer_type, this.getAttribute('content'))
-    // alert(this.textContent);
   }
 
-  // document.getElementById('search').onkeyup = (event) => {
   document.getElementById('search-btn').onclick = (event) => {
 
     const inputFieldText = document.getElementById('search').value;
     const selectFieldText = document.getElementById('layer-type').value;
     console.log(inputFieldText, selectFieldText)
 
-    // const count = parseInt(textbox.value, 10);
     const query = { searchQuery: inputFieldText, layerType: selectFieldText };
-    // if (searchQuery && searchQuery.length > 1) {
     parent.postMessage({ pluginMessage: { type: 'process-search', query } }, '*')
 
     document.getElementById('search-page').classList.add('hide');
@@ -186,10 +172,7 @@
     document.getElementById('result').innerHTML = '';
     document.getElementById('result-page').classList.add('hide');
     document.getElementById('empty-result').classList.add('hide');
-    // parent.postMessage({ pluginMessage: { type: 'cancel' } }, '*')
   }
-
-
 
 </script>
 <style>
@@ -200,7 +183,6 @@
   #result div {
     display: flex;
     align-items: center;
-    /* align-items: flex-start; */
     cursor: pointer;
     margin-bottom: 12px;
     background: #FAFAFA;
@@ -216,8 +198,6 @@
   #result div p {
     margin: 2px 12px;
   }
-
-
 
   .hide {
     display: none;
@@ -253,7 +233,6 @@
 
   .icon-1 {
     padding: 16px 0px 0px 12px;
-    /* min-width: 40px; */
   }
 
   .info-box {
@@ -282,7 +261,6 @@
     margin-left: 12px;
   }
 
-  /* .info-box  */
   .info-box p {
     font-size: 13px;
     margin-left: 16px;
