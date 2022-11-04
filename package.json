@@ -7,8 +7,8 @@
     "build": "tsc -p tsconfig.json",
     "watch": "npm run build -- --watch"
   },
-  "author": "",
-  "license": "",
+  "author": "GeekyGeeky,SamSky",
+  "license": "MIT",
   "devDependencies": {
     "@figma/plugin-typings": "*",
     "typescript": "*"
